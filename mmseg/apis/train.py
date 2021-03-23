@@ -68,6 +68,14 @@ def train_segmentor(model,
         model = MMDataParallel(
             model.cuda(cfg.gpu_ids[0]), device_ids=cfg.gpu_ids)
 
+    # NEW: support paramwise_cfg (untested)
+    try:
+        if cfg.paramwise_cfg is not None:
+            cfg.optimizer.paramwise_cfg = cfg.paramwise_cfg
+    except:
+        pass
+    # END NEW
+
     # build runner
     optimizer = build_optimizer(model, cfg.optimizer)
 
