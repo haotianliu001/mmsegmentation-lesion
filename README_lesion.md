@@ -21,7 +21,7 @@ CUDA_VISIBLE_DEVICES=0,1,2,3 PORT=23456 ./tools/dist_train.sh ./configs/_idrid_/
 CUDA_VISIBLE_DEVICES=2,3 PORT=23456 ./tools/dist_train.sh ./configs/_idrid_/debug.py 2
 
 # 从checkpoint处继续训练
-CUDA_VISIBLE_DEVICES=0,1,2,3 PORT=23456 ./tools/dist_train.sh ./configs/_idrid_/fcn_hr48_40k_idrid_bdice.py 4 --resume-from ./workdirs/xxx.pth
+CUDA_VISIBLE_DEVICES=0,1,2,3 PORT=23456 ./tools/dist_train.sh ./configs/_idrid_/fcn_hr48_40k_idrid_bdice.py 4 --resume-from ./work_dirs/xxx/xxx.pth
 ```
 
 #### 测试
