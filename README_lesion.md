@@ -49,6 +49,7 @@ conda create -n open-mmlab python=3.7 -y
 # 激活环境
 conda activate open-mmlab
 
+
 # 之后的命令一定要在这个环境下
 conda install pytorch=1.6.0 torchvision cudatoolkit=10.2 -c pytorch -y
 pip install mmcv-full==1.2.0 -f https://download.openmmlab.com/mmcv/dist/cu102/torch1.6.0/index.html -i https://pypi.douban.com/simple/
@@ -56,6 +57,19 @@ pip install opencv-python -i https://pypi.douban.com/simple/
 pip install scipy -i https://pypi.douban.com/simple/
 pip install tensorboard tensorboardX -i https://pypi.douban.com/simple/
 pip install sklearn -i https://pypi.douban.com/simple/
+pip install terminaltables -i https://pypi.douban.com/simple/
+pip install matpoltlib -i https://pypi.douban.com/simple/
+
+# 以下是cuda 10.1版本的环境
+conda install pytorch=1.6.0 torchvision cudatoolkit=10.1 -c pytorch -y
+pip install mmcv-full==1.2.0 -f https://download.openmmlab.com/mmcv/dist/cu101/torch1.6.0/index.html -i https://pypi.douban.com/simple/
+pip install opencv-python -i https://pypi.douban.com/simple/
+pip install scipy -i https://pypi.douban.com/simple/
+pip install tensorboard tensorboardX -i https://pypi.douban.com/simple/
+pip install sklearn -i https://pypi.douban.com/simple/
+pip install terminaltables -i https://pypi.douban.com/simple/
+pip install matpoltlib -i https://pypi.douban.com/simple/
+
 
 cd mmsegmentation-lesion
 chmod u+x tools/*
