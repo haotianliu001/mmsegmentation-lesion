@@ -58,7 +58,7 @@ pip install scipy -i https://pypi.douban.com/simple/
 pip install tensorboard tensorboardX -i https://pypi.douban.com/simple/
 pip install sklearn -i https://pypi.douban.com/simple/
 pip install terminaltables -i https://pypi.douban.com/simple/
-pip install matpoltlib -i https://pypi.douban.com/simple/
+pip install matplotlib -i https://pypi.douban.com/simple/
 
 # 以下是cuda 10.1版本的环境
 conda install pytorch=1.6.0 torchvision cudatoolkit=10.1 -c pytorch -y
@@ -68,7 +68,7 @@ pip install scipy -i https://pypi.douban.com/simple/
 pip install tensorboard tensorboardX -i https://pypi.douban.com/simple/
 pip install sklearn -i https://pypi.douban.com/simple/
 pip install terminaltables -i https://pypi.douban.com/simple/
-pip install matpoltlib -i https://pypi.douban.com/simple/
+pip install matplotlib -i https://pypi.douban.com/simple/
 
 
 cd mmsegmentation-lesion
