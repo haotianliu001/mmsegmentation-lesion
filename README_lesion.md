@@ -21,7 +21,7 @@ CUDA_VISIBLE_DEVICES=0,1,2,3 PORT=23456 ./tools/dist_train.sh ./configs/_idrid_/
 CUDA_VISIBLE_DEVICES=2,3 PORT=23456 ./tools/dist_train.sh ./configs/_idrid_/debug.py 2
 
 # 从checkpoint处继续训练
-CUDA_VISIBLE_DEVICES=0,1,2,3 PORT=23456 ./tools/dist_train.sh ./configs/_idrid_/fcn_hr48_40k_idrid_bdice.py 4 --resume-from ./workdirs/xxx.pth
+CUDA_VISIBLE_DEVICES=0,1,2,3 PORT=23456 ./tools/dist_train.sh ./configs/_idrid_/fcn_hr48_40k_idrid_bdice.py 4 --resume-from ./work_dirs/xxx/xxx.pth
 ```
 
 #### 测试
@@ -49,6 +49,7 @@ conda create -n open-mmlab python=3.7 -y
 # 激活环境
 conda activate open-mmlab
 
+
 # 之后的命令一定要在这个环境下
 conda install pytorch=1.6.0 torchvision cudatoolkit=10.2 -c pytorch -y
 pip install mmcv-full==1.2.0 -f https://download.openmmlab.com/mmcv/dist/cu102/torch1.6.0/index.html -i https://pypi.douban.com/simple/
@@ -56,6 +57,19 @@ pip install opencv-python -i https://pypi.douban.com/simple/
 pip install scipy -i https://pypi.douban.com/simple/
 pip install tensorboard tensorboardX -i https://pypi.douban.com/simple/
 pip install sklearn -i https://pypi.douban.com/simple/
+pip install terminaltables -i https://pypi.douban.com/simple/
+pip install matplotlib -i https://pypi.douban.com/simple/
+
+# 以下是cuda 10.1版本的环境
+conda install pytorch=1.6.0 torchvision cudatoolkit=10.1 -c pytorch -y
+pip install mmcv-full==1.2.0 -f https://download.openmmlab.com/mmcv/dist/cu101/torch1.6.0/index.html -i https://pypi.douban.com/simple/
+pip install opencv-python -i https://pypi.douban.com/simple/
+pip install scipy -i https://pypi.douban.com/simple/
+pip install tensorboard tensorboardX -i https://pypi.douban.com/simple/
+pip install sklearn -i https://pypi.douban.com/simple/
+pip install terminaltables -i https://pypi.douban.com/simple/
+pip install matplotlib -i https://pypi.douban.com/simple/
+
 
 cd mmsegmentation-lesion
 chmod u+x tools/*
