@@ -99,10 +99,11 @@ def binary_loss(pred_raw,
             class_loss *= class_weight[i]
         loss += class_loss
 
-    loss = loss / num_classes
-    loss = weight_reduce_loss(loss, weight=weight, reduction=reduction, avg_factor=avg_factor)
     if class_weight is not None and class_weight_norm:
         loss = loss / torch.sum(class_weight)
+    else:
+        loss = loss / num_classes
+    loss = weight_reduce_loss(loss, weight=weight, reduction=reduction, avg_factor=avg_factor)
     return loss
 
 
