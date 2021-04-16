@@ -1,5 +1,4 @@
 # NEW
-# TODO: untested
 
 from torch import nn
 
