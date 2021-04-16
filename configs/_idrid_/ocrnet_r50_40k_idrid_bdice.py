@@ -6,7 +6,7 @@ _base_ = [
 ]
 norm_cfg = dict(type='SyncBN', requires_grad=True)
 model = dict(
-    type='CascadeEncoderDecoder_Lesion',
+    type='CascadeEncoderDecoder_Lesion',  # NEW
     decode_head=[
         dict(
             type='FCNHead',
