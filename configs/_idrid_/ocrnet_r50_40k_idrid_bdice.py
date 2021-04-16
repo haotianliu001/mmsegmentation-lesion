@@ -19,7 +19,7 @@ model = dict(
             num_classes=4,  # NEW
             norm_cfg=norm_cfg,
             align_corners=False,
-            loss_decode=dict(type='BinaryLoss', loss_weight=1.0, loss_type='dice', smooth=1e-5)),  # NEW
+            loss_decode=dict(type='BinaryLoss', loss_weight=0.4, loss_type='dice', smooth=1e-5)),  # NEW
         dict(
             type='OCRHead',
             in_channels=2048,
