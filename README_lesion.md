@@ -96,7 +96,7 @@ pip install opencv-python
 pip install opencv-python -i https://pypi.douban.com/simple/
 ```
 
-anacoda镜像配置（加快conda命令的下载速度，北师大为例）
+anacoda镜像配置（加快conda命令的下载速度，北外为例）
 
 ```sh
 echo \
