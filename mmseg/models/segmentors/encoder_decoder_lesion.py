@@ -4,6 +4,8 @@ import torch.nn.functional as F
 from .encoder_decoder import EncoderDecoder
 from ..builder import SEGMENTORS
 
+import os
+import numpy as np
 
 @SEGMENTORS.register_module()
 class EncoderDecoder_Lesion(EncoderDecoder):
@@ -17,7 +19,8 @@ class EncoderDecoder_Lesion(EncoderDecoder):
                  pretrained=None,
 
                  use_sigmoid=True,
-                 compute_aupr=True
+                 compute_aupr=True,
+                 crop_info_path=None,
                  ):
         super(EncoderDecoder_Lesion, self).__init__(
             backbone=backbone,
@@ -30,6 +33,35 @@ class EncoderDecoder_Lesion(EncoderDecoder):
 
         self.use_sigmoid = use_sigmoid
         self.compute_aupr = compute_aupr
+
+        self.crop_info_dataset = None
+        if crop_info_path is not None:
+            assert os.path.exists(crop_info_path), f'crop info file {crop_info_path} not exist'
+            self.crop_info_dataset = self.load_crop_info_dataset(crop_info_path)
+
+    @staticmethod
+    def load_crop_info_dataset(path):
+        dataset = dict()
+        with open(path) as f:
+            lines = f.readlines()
+            for line in lines:
+                item = line.strip().split(' ')
+                dataset[item[0]] = [int(i) for i in item[1:]]
+        return dataset
+
+    def restore_pad_label(self, seg_logit, img_meta):
+        """
+        Args:
+            seg_logit: [num_class, H, W] range:[0.,1.]
+        """
+        filename = os.path.basename(img_meta[0]['filename']).split('.')[0]
+        top, bottom, left, right, ori_h, ori_w = self.crop_info_dataset[filename]
+        seg_logit = np.pad(seg_logit, ((0, 0), (top, bottom), (left, right)), mode='constant', constant_values=0)
+
+        _, h, w = seg_logit.shape
+        assert ori_h == h and ori_w == w, 'restore error in {}'.format(img_meta[0]['filename'])
+
+        return seg_logit
 
     def inference(self, img, img_meta, rescale):
         """Inference with slide/whole style.
@@ -81,6 +113,8 @@ class EncoderDecoder_Lesion(EncoderDecoder):
         if self.use_sigmoid:
             if self.compute_aupr:
                 seg_logit = seg_logit.squeeze(0).cpu().numpy()
+                if self.crop_info_dataset is not None:
+                    seg_logit = self.restore_pad_label(seg_logit, img_meta)
                 seg_logit = [(seg_logit, self.use_sigmoid, self.compute_aupr)]
             else:
                 seg_logit = (seg_logit > 0.5).int()
