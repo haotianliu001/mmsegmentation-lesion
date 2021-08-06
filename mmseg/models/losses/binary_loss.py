@@ -8,10 +8,10 @@ from .utils import weight_reduce_loss
 from ..builder import LOSSES
 
 
-def _make_one_hot(gt, num_classes, ignore=0):
+def _make_one_hot(gt, num_classes, ignore=(0, 255)):
     """
     :param label: [N, *], values in [0,num_classes)
-    :param ignore: ignore value of background, here is 0
+    :param ignore: ignore value of background, here is (0, 255)
     :return: [N, C, *]
     """
     # label = gt.clone()
@@ -21,10 +21,17 @@ def _make_one_hot(gt, num_classes, ignore=0):
     shape[1] = num_classes + 1
 
     if ignore is not None:
-        label[label == ignore] = num_classes + 1
-        label = label - 1
+        if 0 in ignore:
+            for index in ignore:
+                label[label == index] = num_classes + 1
+            label = label - 1
+        else:
+            for index in ignore:
+                label[label == index] = num_classes
 
     result = torch.zeros(shape, device=label.device)
+
+    # print(set(label.detach().cpu().numpy().flatten().tolist())) # for DEBUG
     result.scatter_(1, label, 1)
 
     return result[:, :-1, ]
