@@ -6,7 +6,7 @@ rgb std:
  [76.25170836 48.79813652 21.62512444]
 """
 dataset_type = 'LesionDataset'
-data_root = '../data/DDR_raw'
+data_root = '../data/DDR'
 img_norm_cfg = dict(mean=[81.205, 50.636, 21.216], std=[76.252, 48.798, 21.625], to_rgb=True)
 image_scale = (1024, 1024)
 crop_size = (1024, 1024)

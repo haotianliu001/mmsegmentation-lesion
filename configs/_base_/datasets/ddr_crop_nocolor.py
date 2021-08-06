@@ -10,13 +10,7 @@ data_root = '../data/DDR_raw'
 img_norm_cfg = dict(mean=[81.205, 50.636, 21.216], std=[76.252, 48.798, 21.625], to_rgb=True)
 image_scale = (1024, 1024)
 crop_size = (1024, 1024)
-palette = [
-    [0, 0, 0],
-    [128, 0, 0],  # EX: red
-    [0, 128, 0],  # HE: green
-    [128, 128, 0],  # SE: yellow
-    [0, 0, 128]  # MA: blue
-]
+
 classes = ['bg', 'EX', 'HE', 'SE', 'MA']
 train_pipeline = [
     dict(type='LoadImageFromFile'),
@@ -50,25 +44,22 @@ data = dict(
     workers_per_gpu=1,
     train=dict(
         img_dir='image/train_crop',  # modify
-        ann_dir='label/train/annotations_crop',  # modify
+        ann_dir='label/train/annotations_crop_nocolor',  # modify
         data_root=data_root,
         classes=classes,
-        palette=palette,
         type=dataset_type,
         pipeline=train_pipeline),
     val=dict(
         img_dir='image/test_crop',  # modify
-        ann_dir='label/test/annotations',
+        ann_dir='label/test/annotations_nocolor',
         data_root=data_root,
         classes=classes,
-        palette=palette,
         type=dataset_type,
         pipeline=test_pipeline),
     test=dict(
         img_dir='image/test_crop',  # modify
-        ann_dir='label/test/annotations',
+        ann_dir='label/test/annotations_nocolor',
         data_root=data_root,
         classes=classes,
-        palette=palette,
         type=dataset_type,
         pipeline=test_pipeline))
