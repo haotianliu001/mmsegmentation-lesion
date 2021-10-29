@@ -6,6 +6,7 @@ _base_ = [
 ]
 model = dict(
     type='EncoderDecoder_Lesion',
+    crop_info_path='../data/IDRID/eval_crop.txt',
     decode_head=dict(
         num_classes=4,
         loss_decode=dict(type='BinaryLoss', loss_weight=1.0, loss_type='dice', smooth=1e-5)

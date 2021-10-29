@@ -1,15 +1,17 @@
 # NEW
+# 数据增强方式：离线翻转(水平，竖直) + 离线旋转(90,-90, 180)
+#              + Resize(0.5, 2.0) + RandomCrop + 颜色扰动(PhotoMetricDistortion)
 """
 rgb mean:
- [81.20546605 50.63635725 21.21597278]
+ [116.51282647  56.43716432  16.30857136]
 rgb std:
- [76.25170836 48.79813652 21.62512444]
+ [80.20605713 41.23209693 13.29250962]
 """
 dataset_type = 'LesionDataset'
-data_root = '../data/DDR'
-img_norm_cfg = dict(mean=[81.205, 50.636, 21.216], std=[76.252, 48.798, 21.625], to_rgb=True)
-image_scale = (1024, 1024)
-crop_size = (1024, 1024)
+data_root = '../data/IDRID_offline'
+img_norm_cfg = dict(mean=[116.513, 56.437, 16.309], std=[80.206, 41.232, 13.293], to_rgb=True)
+image_scale = (1440, 960)
+crop_size = (960, 1440)
 palette = [
     [0, 0, 0],
     [128, 0, 0],  # EX: red
@@ -49,15 +51,15 @@ data = dict(
     samples_per_gpu=1,
     workers_per_gpu=1,
     train=dict(
-        img_dir='image/train_crop',  # modify
-        ann_dir='label/train/annotations_crop',  # modify
+        img_dir='image/train',
+        ann_dir='label/train/annotations',
         data_root=data_root,
         classes=classes,
         palette=palette,
         type=dataset_type,
         pipeline=train_pipeline),
     val=dict(
-        img_dir='image/test_crop',  # modify
+        img_dir='image/test',
         ann_dir='label/test/annotations',
         data_root=data_root,
         classes=classes,
@@ -65,7 +67,7 @@ data = dict(
         type=dataset_type,
         pipeline=test_pipeline),
     test=dict(
-        img_dir='image/test_crop',  # modify
+        img_dir='image/test',
         ann_dir='label/test/annotations',
         data_root=data_root,
         classes=classes,

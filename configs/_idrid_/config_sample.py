@@ -2,12 +2,13 @@
 # 以下内容由 configs/_base_/models/pspnet_r50-d8.py 修改得到
 _base_ = [
     '../_base_/models/pspnet_r50-d8.py',  # 沿用对应的backbone配置文件
-    '../_base_/datasets/idrid.py',  # 改变数据集文件，对应idrid.py和ddr.py
+    '../_base_/datasets/idrid_offline.py',  # 改变数据集文件，对应idrid.py和ddr.py
     '../_base_/default_runtime.py',  # runtime配置，可以看一下内容
     '../_base_/schedules/schedule_40k.py'  # 关于学习率，迭代次数等的设置
 ]
 model = dict(
     type='EncoderDecoder_Lesion',  # 替换原始的EncoderDecoder类，可以针对眼底数据集训练和预测，计算新的指标等，分类使用sigmoid激活
+    # crop_info_path='../data/IDRID/eval_crop.txt',  # 如果对数据集裁剪过黑边，就需要加上这一行
     # backbone=dict(  # 这里保存不变，有时候会需要修改backbone的配置
     #     type='ResNetV1c',
     #     depth=50,

@@ -1,4 +1,6 @@
 # NEW
+# 数据增强方式：裁去黑边 + Resize(0.5, 2.0) + RandomCrop
+#              +  RandomFlip(Horizontal) + RandomRotate(-45, 45)
 """
 rgb mean:
  [116.51282647  56.43716432  16.30857136]
@@ -8,8 +10,8 @@ rgb std:
 dataset_type = 'LesionDataset'
 data_root = '../data/IDRID'
 img_norm_cfg = dict(mean=[116.513, 56.437, 16.309], std=[80.206, 41.232, 13.293], to_rgb=True)
-image_scale = (1440, 960)
-crop_size = (960, 1440)
+image_scale = (1152, 960)
+crop_size = (960, 1152)
 palette = [
     [0, 0, 0],
     [128, 0, 0],  # EX: red
@@ -23,8 +25,10 @@ train_pipeline = [
     dict(type='LoadAnnotations'),
     dict(type='Resize', img_scale=image_scale, ratio_range=(0.5, 2.0)),
     dict(type='RandomCrop', crop_size=crop_size, cat_max_ratio=0.75),
-    dict(type='RandomFlip', prob=0.0),
-    dict(type='PhotoMetricDistortion'),
+    dict(type='RandomFlip', flip_ratio=0.5, direction='horizontal'),
+    dict(type='RandomRotate', prob=1.0, pad_val=0, seg_pad_val=0,
+         degree=(-45, -30, -15, 0, 15, 30, 45), auto_bound=False),
+    # dict(type='PhotoMetricDistortion'),
     dict(type='Normalize', **img_norm_cfg),
     dict(type='Pad', size=crop_size, pad_val=0, seg_pad_val=0),
     dict(type='DefaultFormatBundle'),
@@ -45,19 +49,20 @@ test_pipeline = [
             dict(type='Collect', keys=['img']),
         ])
 ]
+
 data = dict(
     samples_per_gpu=1,
     workers_per_gpu=1,
     train=dict(
-        img_dir='image/train',
-        ann_dir='label/train/annotations',
+        img_dir='image/train_crop',
+        ann_dir='label/train/annotations_crop',
         data_root=data_root,
         classes=classes,
         palette=palette,
         type=dataset_type,
         pipeline=train_pipeline),
     val=dict(
-        img_dir='image/test',
+        img_dir='image/test_crop',
         ann_dir='label/test/annotations',
         data_root=data_root,
         classes=classes,
@@ -65,7 +70,7 @@ data = dict(
         type=dataset_type,
         pipeline=test_pipeline),
     test=dict(
-        img_dir='image/test',
+        img_dir='image/test_crop',
         ann_dir='label/test/annotations',
         data_root=data_root,
         classes=classes,

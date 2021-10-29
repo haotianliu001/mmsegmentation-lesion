@@ -1,5 +1,6 @@
 # NEW
-# 同时使用训练集和验证集的数据训练
+# 数据增强方式：离线翻转(水平，竖直) + 离线旋转(90,-90, 180)
+#              + Resize(0.5, 2.0) + RandomCrop + 颜色扰动(PhotoMetricDistortion)
 """
 rgb mean:
  [81.20546605 50.63635725 21.21597278]
@@ -7,7 +8,7 @@ rgb std:
  [76.25170836 48.79813652 21.62512444]
 """
 dataset_type = 'LesionDataset'
-data_root = '../data/DDR'
+data_root = '../data/DDR_offline'
 img_norm_cfg = dict(mean=[81.205, 50.636, 21.216], std=[76.252, 48.798, 21.625], to_rgb=True)
 image_scale = (1024, 1024)
 crop_size = (1024, 1024)
@@ -50,8 +51,8 @@ data = dict(
     samples_per_gpu=1,
     workers_per_gpu=1,
     train=dict(
-        img_dir=['image/train', 'image/val_train'],
-        ann_dir=['label/train/annotations', 'label/val_train/annotations'],
+        img_dir='image/train',
+        ann_dir='label/train/annotations',
         data_root=data_root,
         classes=classes,
         palette=palette,
