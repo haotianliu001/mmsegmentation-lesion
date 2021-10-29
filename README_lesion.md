@@ -76,6 +76,22 @@ chmod u+x tools/*
 pip install -e . -i https://pypi.douban.com/simple/
 ```
 
+### 修改的文件列表 
+(用于对比和迁移到其他版本的mmsegmentation)
+
+#### new:
+- [lesion_metrics.py](mmseg/core/evaluation/lesion_metrics.py)
+- [lesion_dataset.py](mmseg/datasets/lesion_dataset.py)
+- [encoder_decoder_lesion.py](mmseg/models/segmentors/encoder_decoder_lesion.py)
+- [cascade_encoder_decoder_lesion.py](mmseg/models/segmentors/cascade_encoder_decoder_lesion.py)
+- [binary_loss.py](mmseg/models/losses/binary_loss.py)
+
+#### modify:
+- [evaluation/\_\_init__.py](mmseg/core/evaluation/__init__.py)
+- [datasets/\_\_init__.py](mmseg/datasets/__init__.py)
+- [segmentors/\_\_init__.py](mmseg/models/segmentors/__init__.py)
+- [losses/\_\_init__.py](mmseg/models/losses/__init__.py)
+
 ### 附录
 
 anaconda安装
