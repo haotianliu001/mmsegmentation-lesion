@@ -119,6 +119,8 @@ class EncoderDecoder_Lesion(EncoderDecoder):
             else:
                 seg_logit = (seg_logit > 0.5).int()
                 seg_logit = seg_logit.squeeze(0).cpu().numpy()
+                if self.crop_info_dataset is not None:
+                    seg_logit = self.restore_pad_label(seg_logit, img_meta)
             return seg_logit
         # END NEW
 
