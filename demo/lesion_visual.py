@@ -102,8 +102,8 @@ def main():
 
             filename = file.split('.')[0]
             
-            # label = draw_label(result)
-            # label.save(os.path.join(output_root, '{}_{}_label.png'.format(filename, args.o)))
+            label = draw_label(result)
+            label.save(os.path.join(output_root, '{}_{}_label.png'.format(filename, args.o)))
 
             edge = draw_edges(img_path, result)
             cv2.imwrite(os.path.join(output_root, '{}_{}_edge.jpg'.format(filename, args.o)), edge)
