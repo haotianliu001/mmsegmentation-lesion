@@ -42,6 +42,7 @@ def init_segmentor(config, checkpoint=None, device='cuda:0'):
     config.model.pretrained = None
     config.model.train_cfg = None
     config.model.compute_aupr = False  # NEW
+    config.model.crop_info_path = None  # NEW
     model = build_segmentor(config.model, test_cfg=config.get('test_cfg'))
     if checkpoint is not None:
         checkpoint = load_checkpoint(model, checkpoint, map_location='cpu')
